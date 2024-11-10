@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/style.css">
+    <title>SQL Injection Demo</title>
+</head>
+<body>
+<div class="container">
+    <h1>SQL Injection Vulnerability</h1>
+
+    <form action="/test-sql" method="POST">
+        <label for="userName">Enter User Name:</label>
+        <input type="text" id="userName" name="userName" placeholder="Enter a user name" required>
+
+        <label for="vulnerable">
+            Enable SQL Injection Vulnerability:
+            <input type="checkbox" id="vulnerable" name="vulnerable">
+        </label>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <% if (rows.length > 0) { %>
+        <h2>Results:</h2>
+        <ul>
+            <% rows.forEach(row => { %>
+                <li><%= row.name %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <div class="home-button-container">
+        <a href="/" class="return-home-btn">Return to Home</a>
+    </div>
+</div>
+</body>
+</html>

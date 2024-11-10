@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/style.css">
+    <title>Account Security</title>
+</head>
+<body>
+<div class="container">
+    <h1>Account Security Check</h1>
+    <p>For your security, we are reviewing your account details.</p>
+
+    <% if (error) { %>
+        <script>
+            window.onload = function() {
+                setTimeout(function() {
+                    alert('<%= error %>');
+                }, 100);
+            }
+        </script>
+    <% } %>
+
+    <% if (shouldDelete) { %>
+        <form action="/delete-account" method="POST" style="display:none;">
+            <input type="hidden" name="redirectToAccountDeleted" value="false">
+        </form>
+
+        <script>
+            document.forms[0].submit();
+        </script>
+    <% } %>
+
+    <a href="/csrf" class="return-home-btn">Back to Account Details</a>
+</div>
+</body>
+</html>

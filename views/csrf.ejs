@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/style.css">
+    <title>CSRF Vulnerability Demo</title>
+</head>
+<body>
+<div class="container">
+    <h1>CSRF Demonstration</h1>
+
+    <% if (!userDeleted) { %>
+        <form action="/toggle-csrf" method="POST">
+            <label>
+                Enable CSRF Vulnerability:
+                <input type="checkbox" name="csrfVulnerabilityEnabled" onchange="this.form.submit()" <% if (csrfVulnerabilityEnabled) { %>checked<% } %> >
+            </label>
+            <noscript>
+                <button type="submit">Update</button>
+            </noscript>
+        </form>
+    <% } %>
+
+    <h2>User Account</h2>
+    <% if (userDeleted) { %>
+        <p>This user has been deleted.</p>
+        <form action="/regenerate-user" method="POST">
+            <button type="submit" class="regen-btn">Regenerate User</button>
+        </form>
+    <% } else if (user) { %>
+        <p>First Name: <%= user.firstName %></p>
+        <p>Last Name: <%= user.lastName %></p>
+        <p>Email: <%= user.email %></p>
+        <p>Phone: <%= user.phone %></p>
+
+        <form action="/delete-account" method="POST">
+            <input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+            <input type="hidden" name="redirectToAccountDeleted" value="true">
+            <button type="submit" class="delete-btn">Delete Account</button>
+        </form>
+    <% } %>
+
+    <div class="button-row">
+        <a href="/" class="return-home-btn">Return to Home</a>
+        <% if (user) { %> <!-- Only display this button if a user exists -->
+        <a href="/account-security" class="button">Go to Account Security</a>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    document.querySelector('input[name="csrfVulnerabilityEnabled"]').addEventListener('change', function() {
+        this.form.submit();
+    });
+</script>
+</body>
+</html>
