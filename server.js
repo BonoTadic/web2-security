@@ -5,7 +5,7 @@ const path = require('path');
 const crypto = require('crypto');
 const session = require('express-session');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const secret = "rTZ[7&ZQ%&8{B3z(FF#'/#$sks^~7^";
 const sessionId = "43335310fafc27a2e0e0634f4c0e7905";
